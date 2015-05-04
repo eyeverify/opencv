@@ -27,7 +27,7 @@ However, opencv2.framework directory is erased and recreated on each run.
 
 import glob, re, os, os.path, shutil, string, sys, exceptions, subprocess, argparse
 
-opencv_contrib_path = None
+opencv_contrib_path = os.environ['EVDIR'] + '/share/opencv_contrib/modules'
 
 def execute(cmd):
     try:
