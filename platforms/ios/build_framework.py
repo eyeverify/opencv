@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/local/bin/python
 """
 The script builds OpenCV.framework for iOS.
 The built framework is universal, it can be used to build app and run it on either iOS simulator or real device.
@@ -78,8 +78,8 @@ def build_opencv(srcroot, buildroot, target, arch):
         if os.path.isfile(wlib):
             os.remove(wlib)
 
-    execute("xcodebuild IPHONEOS_DEPLOYMENT_TARGET=6.0 -parallelizeTargets ARCHS=%s -jobs 8 -sdk %s -configuration Release -target %s" % (arch, target.lower(), build_target))
-    execute("xcodebuild IPHONEOS_DEPLOYMENT_TARGET=6.0 ARCHS=%s -sdk %s -configuration Release -target install install" % (arch, target.lower()))
+    # execute("xcodebuild IPHONEOS_DEPLOYMENT_TARGET=8.0 -parallelizeTargets ARCHS=%s -jobs 8 -sdk %s -configuration Release -target %s" % (arch, target.lower(), build_target))
+    # execute("xcodebuild IPHONEOS_DEPLOYMENT_TARGET=8.0 ARCHS=%s -sdk %s -configuration Release -target install archive" % (arch, target.lower()))
     os.chdir(currdir)
 
 def put_framework_together(srcroot, dstroot):
@@ -125,15 +125,13 @@ def put_framework_together(srcroot, dstroot):
 def build_framework(srcroot, dstroot):
     "main function to do all the work"
 
-    targets = [("armv7", "iPhoneOS"),
-               ("armv7s", "iPhoneOS"),
-               ("arm64", "iPhoneOS"),
+    targets = [("arm64", "iPhoneOS"),
                ("i386", "iPhoneSimulator"),
                ("x86_64", "iPhoneSimulator")]
     for t in targets:
         build_opencv(srcroot, os.path.join(dstroot, "build"), t[1], t[0])
 
-    put_framework_together(srcroot, dstroot)
+    # put_framework_together(srcroot, dstroot)
 
 
 if __name__ == "__main__":
